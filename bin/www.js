@@ -7,6 +7,16 @@
 const app = require('../app');
 const debug = require('debug')('webrtc-true:server');
 const http = require('http');
+// const fs = require("fs");
+// const crypto = require('crypto');
+
+/**
+ * Add HTTPS Support
+ */
+
+// const privateKey = fs.readFileSync('public/ssl/privatekey.pem').toString();
+// const certificate = fs.readFileSync('public/ssl/certificate.pem').toString();
+// const credentials = crypto.createCredentials({key: privateKey, cert: certificate});
 
 /**
  * Get port from environment and store in Express.
@@ -24,11 +34,13 @@ const io = require('socket.io')(server);
 let agents = new Map();
 let customers = new Map();
 
+// server.setSecure(credentials);
+
+
+
 io.on('connection', (socket) => {
 
-
     debug('Connected to signalling server, Peer ID: %s', socket.id);
-
     socket.on('connect-client', (data) => {
         debug("Client Connected: " + data.id);
         socket.username = data.name;
